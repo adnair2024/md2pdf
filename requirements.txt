@@ -1,0 +1,8 @@
+Flask
+WeasyPrint==61.2
+pydyf==0.7.0
+Markdown
+Pygments
+Werkzeug
+dominate
+Flask-WTF

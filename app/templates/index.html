@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header>
+    <h1>md2pdf</h1>
+    <nav>
+        <button id="upload-md-btn" class="btn btn-upload">Upload Markdown</button>
+        <button id="upload-pdf-btn" class="btn btn-upload">Upload PDF</button>
+        <button id="convert-to-pdf" class="btn btn-convert">Convert to PDF</button>
+    </nav>
+</header>
+
+<main class="split-pane">
+    <section class="pane left-pane">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
+        <textarea id="markdown-input" placeholder="Start typing your Markdown here...">{{ initial_markdown if initial_markdown else '' }}</textarea>
+    </section>
+    <section class="pane right-pane">
+        <div id="preview" class="markdown-body"></div>
+    </section>
+</main>
+
+<div id="upload-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Upload File</h2>
+        <form id="upload-form" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" id="file-input" accept=".md, .pdf">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
