@@ -59,6 +59,37 @@ header h1 {
     font-size: 1.8em;
 }
 
+.toolbar {
+    background-color: var(--secondary-bg-color);
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toolbar label {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.toolbar select {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
 nav {
     position: absolute;
     right: 20px;
@@ -83,6 +114,14 @@ nav {
 
 .btn-upload:hover {
     background-color: #e07b00; /* Darker orange */
+}
+
+.btn-preview {
+    background-color: #17a2b8; /* Teal */
+}
+
+.btn-preview:hover {
+    background-color: #138496;
 }
 
 .btn-convert {
@@ -245,6 +284,21 @@ footer button:hover {
     border-radius: 8px;
     position: relative;
     color: var(--text-color);
+}
+
+.modal-content.large-modal {
+    width: 90%;
+    height: 80vh;
+    margin: 5% auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#pdf-preview-container {
+    flex-grow: 1;
+    background-color: #525659; /* PDF viewer background typically grey */
+    padding: 10px;
+    border-radius: 4px;
 }
 
 .close-button {

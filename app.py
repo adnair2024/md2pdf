@@ -37,6 +37,14 @@ def convert_pdf():
     try:
         data = request.get_json()
         md_text = data.get('markdown', '')
+        font = data.get('font', 'sans-serif')
+        font_size = data.get('fontSize', '12px')
+        line_height = data.get('lineHeight', '1.5')
+        margin = data.get('margin', '25.4mm')
+        
+        # Check for disposition argument (inline vs attachment)
+        disposition = request.args.get('disposition', 'attachment')
+
         html_content = markdown.markdown(md_text, extensions=['fenced_code', 'codehilite'])
 
         # Basic HTML structure for PDF
@@ -47,9 +55,16 @@ def convert_pdf():
             <meta charset="utf-8">
             <title>Markdown to PDF</title>
             <style>
-                body {{ font-family: sans-serif; margin: 20mm; }}
+                @page {{ margin: {margin}; }}
+                body {{ 
+                    font-family: {font}; 
+                    font-size: {font_size};
+                    line-height: {line_height};
+                }}
                 pre {{ background-color: #eee; padding: 1em; overflow: auto; }}
                 code {{ font-family: monospace; }}
+                /* Ensure images fit within the page */
+                img {{ max-width: 100%; height: auto; }}
             </style>
         </head>
         <body>
@@ -65,7 +80,12 @@ def convert_pdf():
         pdf_bytes.seek(0)
 
         response = make_response(send_file(pdf_bytes, mimetype='application/pdf'))
-        response.headers['Content-Disposition'] = 'attachment; filename=document.pdf'
+        
+        if disposition == 'inline':
+             response.headers['Content-Disposition'] = 'inline; filename=preview.pdf'
+        else:
+             response.headers['Content-Disposition'] = 'attachment; filename=document.pdf'
+             
         return response
     except Exception as e:
         app.logger.error(f"PDF conversion failed: {e}", exc_info=True)

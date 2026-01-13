@@ -6,9 +6,50 @@
     <nav>
         <button id="upload-md-btn" class="btn btn-upload">Upload Markdown</button>
         <button id="upload-pdf-btn" class="btn btn-upload">Upload PDF</button>
+        <button id="preview-pdf-btn" class="btn btn-preview">Preview PDF</button>
         <button id="convert-to-pdf" class="btn btn-convert">Convert to PDF</button>
     </nav>
 </header>
+
+<div class="toolbar">
+    <div class="toolbar-group">
+        <label for="font-select">Font:</label>
+        <select id="font-select">
+            <option value="sans-serif" selected>Sans Serif</option>
+            <option value="serif">Serif</option>
+            <option value="monospace">Monospace</option>
+            <option value="Arial, sans-serif">Arial</option>
+            <option value="'Times New Roman', serif">Times New Roman</option>
+            <option value="'Courier New', monospace">Courier New</option>
+        </select>
+    </div>
+    <div class="toolbar-group">
+        <label for="size-select">Size:</label>
+        <select id="size-select">
+            <option value="10px">Small (10px)</option>
+            <option value="12px">Normal (12px)</option>
+            <option value="14px">Medium (14px)</option>
+            <option value="16px" selected>Large (16px)</option>
+            <option value="18px">Extra Large (18px)</option>
+        </select>
+    </div>
+    <div class="toolbar-group">
+        <label for="spacing-select">Spacing:</label>
+        <select id="spacing-select">
+            <option value="1.0">Single</option>
+            <option value="1.5" selected>1.5</option>
+            <option value="2.0">Double</option>
+        </select>
+    </div>
+    <div class="toolbar-group">
+        <label for="margin-select">Margins:</label>
+        <select id="margin-select">
+            <option value="12.7mm">Narrow (0.5")</option>
+            <option value="25.4mm" selected>Normal (1")</option>
+            <option value="50.8mm">Wide (2")</option>
+        </select>
+    </div>
+</div>
 
 <main class="split-pane">
     <section class="pane left-pane">
@@ -36,6 +77,16 @@
             <input type="file" name="file" id="file-input" accept=".md, .pdf">
             <button type="submit">Upload</button>
         </form>
+    </div>
+</div>
+
+<div id="pdf-preview-modal" class="modal">
+    <div class="modal-content large-modal">
+        <span class="close-button close-preview">&times;</span>
+        <h2>PDF Preview</h2>
+        <div id="pdf-preview-container">
+            <iframe id="pdf-preview-frame" src="" width="100%" height="600px" style="border: none;"></iframe>
+        </div>
     </div>
 </div>
 {% endblock %}
