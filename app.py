@@ -29,7 +29,7 @@ def index():
 def render_markdown():
     data = request.get_json()
     md_text = data.get('markdown', '')
-    html = markdown.markdown(md_text, extensions=['fenced_code', 'codehilite'])
+    html = markdown.markdown(md_text, extensions=['fenced_code', 'codehilite', 'extra'])
     return jsonify({'html': html})
 
 @app.route('/convert_pdf', methods=['POST'])
@@ -45,7 +45,7 @@ def convert_pdf():
         # Check for disposition argument (inline vs attachment)
         disposition = request.args.get('disposition', 'attachment')
 
-        html_content = markdown.markdown(md_text, extensions=['fenced_code', 'codehilite'])
+        html_content = markdown.markdown(md_text, extensions=['fenced_code', 'codehilite', 'extra'])
 
         # Basic HTML structure for PDF
         html_string = f"""
@@ -65,6 +65,22 @@ def convert_pdf():
                 code {{ font-family: monospace; }}
                 /* Ensure images fit within the page */
                 img {{ max-width: 100%; height: auto; }}
+
+                /* Table styling for PDF */
+                table {{ 
+                    width: 100%; 
+                    border-collapse: collapse; 
+                    margin-bottom: 1em; 
+                }}
+                th, td {{ 
+                    border: 1px solid #ccc; 
+                    padding: 8px; 
+                    text-align: left; 
+                }}
+                th {{ 
+                    background-color: #f2f2f2; 
+                    font-weight: bold; 
+                }}
             </style>
         </head>
         <body>
